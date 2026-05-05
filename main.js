@@ -66,24 +66,32 @@ const config = {
     chromaticAberration: 0,
 };
 
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
 const gradient = new NeatGradient({
     ref: document.getElementById("gradient"),
-    ...config
+    ...config,
+    speed: isMobile ? 0 : config.speed,
 });
 
-window.addEventListener("scroll", () => {
-    gradient.yOffset = window.scrollY;
-});
+if (!isMobile) {
+    window.addEventListener("scroll", () => {
+        gradient.yOffset = window.scrollY;
+    });
+}
 
 // Waitlist section gradient (same config)
 const gradientWaitlist = new NeatGradient({
     ref: document.getElementById("gradient-waitlist"),
-    ...config
+    ...config,
+    speed: isMobile ? 0 : config.speed,
 });
 
-window.addEventListener("scroll", () => {
-    gradientWaitlist.yOffset = window.scrollY * 0.5;
-});
+if (!isMobile) {
+    window.addEventListener("scroll", () => {
+        gradientWaitlist.yOffset = window.scrollY * 0.5;
+    });
+}
 
 // Nav scroll effect
 const nav = document.getElementById("nav");
