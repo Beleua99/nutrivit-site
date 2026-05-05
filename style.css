@@ -949,6 +949,11 @@ body {
 
   .hiw-title { font-size: 1.7rem; }
 
+  .hiw-video {
+    transform: scale(1.6);
+    transform-origin: center center;
+  }
+
   .hiw-steps {
     flex-direction: column;
     align-items: center;
