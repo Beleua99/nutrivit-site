@@ -342,3 +342,23 @@ observeAndStart('card-meal-planning', initMealAnim);
 observeAndStart('card-grocery',       initGroceryAnim);
 observeAndStart('card-apple-health',  initRingsAnim);
 observeAndStart('card-ai-chat',       initChatAnim);
+
+// ---- FAQ cascade animation — cards slide in from left one by one ----
+const faqItems = Array.from(document.querySelectorAll('.faq-item'));
+faqItems.forEach((item, i) => {
+  item.style.opacity = '0';
+  item.style.transform = 'translateX(-40px)';
+  item.style.transition = `opacity 0.45s ease ${i * 0.1}s, transform 0.45s cubic-bezier(0.4,0,0.2,1) ${i * 0.1}s`;
+});
+
+const faqObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateX(0)';
+      faqObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+faqItems.forEach(item => faqObserver.observe(item));
