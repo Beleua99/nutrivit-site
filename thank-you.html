@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're on the list! — Nutrivit</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="apple-touch-icon" href="assets/logo.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Google Analytics -->
+  <script>
+    window.addEventListener('load', function() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-5LQC8K8VGG';
+      s.async = true;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5LQC8K8VGG');
+      gtag('event', 'waitlist_signup', { event_category: 'engagement' });
+    });
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #4CAF50;
+      --green-deep: #388E3C;
+      --bg: #F5F5F5;
+      --white: #FFFFFF;
+      --text: #1A1A1A;
+      --muted: #666666;
+      --border: #E0E0E0;
+      --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-btn: 0 4px 16px rgba(76,175,80,0.35);
+      --radius-card: 20px;
+      --radius-btn: 50px;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', 'SF Pro Display', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Gradient canvas background */
+    #gradient {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Nav */
+    .nav__pill-sticky {
+      position: fixed;
+      top: 20px;
+      left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px;
+    }
+
+    .nav__pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 50px;
+      padding: 8px 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    .nav__pill-logo img { display: block; border-radius: 50%; }
+
+    .nav__link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 50px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav__link:hover { color: var(--text); background: rgba(0,0,0,0.05); }
+
+    .nav__link--cta {
+      background: var(--green);
+      color: #fff;
+      padding: 8px 18px;
+      box-shadow: var(--shadow-btn);
+    }
+
+    .nav__link--cta:hover { background: var(--green-deep); color: #fff; }
+
+    /* Page layout */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: 56px 48px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Checkmark icon */
+    .check-ring {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      animation: popIn 0.5s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .check-ring svg { display: block; }
+
+    /* Text */
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .title {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+
+    .subtitle strong { color: var(--text); font-weight: 600; }
+
+    /* Email notify badge */
+    .notify-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--green-deep);
+      background: #E8F5E9;
+      border: 1px solid #C8E6C9;
+      border-radius: 50px;
+      padding: 10px 18px;
+      margin-bottom: 32px;
+    }
+
+    /* Perks list */
+    .perks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .perks li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .perk-dot {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #E8F5E9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: var(--radius-btn);
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn--primary {
+      background: var(--green);
+      color: #fff;
+      box-shadow: var(--shadow-btn);
+      width: 100%;
+    }
+
+    .btn--primary:hover {
+      background: var(--green-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(76,175,80,0.4);
+    }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--green);
+      border: 2px solid var(--green);
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .btn--ghost:hover {
+      background: #E8F5E9;
+      transform: translateY(-2px);
+    }
+
+    /* Social share */
+    .share-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      margin: 28px 0 14px;
+    }
+
+    .share-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 9px 18px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .share-btn:hover { background: #ebebeb; transform: translateY(-1px); }
+
+    /* Footer */
+    .footer {
+      position: relative;
+      z-index: 1;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .card { padding: 40px 24px; }
+      .title { font-size: 26px; }
+      .nav__link:not(.nav__link--cta) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="gradient"></canvas>
+
+  <!-- NAV -->
+  <div class="nav__pill-sticky">
+    <div class="nav__pill">
+      <span class="nav__pill-logo">
+        <picture>
+          <source srcset="assets/logo.webp" type="image/webp" />
+          <img src="assets/logo.png" alt="Nutrivit logo" width="32" height="32" />
+        </picture>
+      </span>
+      <a href="index.html" class="nav__link">Home</a>
+      <a href="index.html#features" class="nav__link">Features</a>
+      <a href="index.html#how-it-works" class="nav__link">How it works</a>
+      <a href="index.html#faq" class="nav__link">FAQ</a>
+      <a href="index.html#waitlist" class="nav__link nav__link--cta">Join the waitlist</a>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="page">
+    <div class="card">
+      <!-- Checkmark -->
+      <div class="check-ring">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <p class="eyebrow">You're in!</p>
+      <h1 class="title">Welcome to Nutrivit</h1>
+      <p class="subtitle">
+        You're now on the early access list.<br />
+        We'll email you the moment <strong>Nutrivit</strong> is ready for you.
+      </p>
+      <p class="notify-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        You'll be notified by email when Nutrivit is available to download!
+      </p>
+
+      <!-- Perks -->
+      <ul class="perks">
+        <li>
+          <span class="perk-dot">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          7 days of full access — completely free
+        </li>
+        <li>
+          <span class="perk-dot">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Priority access before the public launch
+        </li>
+        <li>
+          <span class="perk-dot">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Personalized AI meal plans from day one
+        </li>
+      </ul>
+
+      <a href="index.html" class="btn btn--primary">Back to home</a>
+      <a href="index.html#features" class="btn btn--ghost">Explore features</a>
+
+      <!-- Share -->
+      <p class="share-label">Know someone who'd love this?</p>
+      <div class="share-row">
+        <a
+          href="https://twitter.com/intent/tweet?text=Just%20joined%20the%20Nutrivit%20waitlist%20%E2%80%94%20an%20AI%20nutritionist%20app%20that%20creates%20personalized%20meal%20plans%20and%20tracks%20your%20progress.%20%F0%9F%8C%BF%20nutrivit.app"
+          target="_blank" rel="noopener noreferrer" class="share-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Share on X
+        </a>
+        <a
+          href="https://www.instagram.com/nutrivit_ai/"
+          target="_blank" rel="noopener noreferrer" class="share-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Follow us
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-copy">&copy; 2026 Nutrivit. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="main.js"></script>
+
+  <script>
+    (function () {
+      // Animated gradient background — same as main page
+      const canvas = document.getElementById('gradient');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      let t = 0;
+      function draw() {
+        const w = canvas.width, h = canvas.height;
+        const grad = ctx.createLinearGradient(0, 0, w * 0.6, h);
+        grad.addColorStop(0, '#FFFFFF');
+        grad.addColorStop(0.6, '#F0F9F1');
+        grad.addColorStop(1, '#E8F5E9');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+        t++;
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+
+</body>
+</html>

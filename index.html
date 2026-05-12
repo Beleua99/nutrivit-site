@@ -700,16 +700,20 @@
         btn.textContent = 'Joining...';
 
         try {
-          await fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email }),
-          });
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 5000);
+          try {
+            await fetch(SCRIPT_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name, email }),
+              signal: controller.signal,
+            });
+          } catch (_) {}
+          clearTimeout(timer);
 
-          btn.textContent = "You're on the list! ✓";
-          btn.style.background = '#388E3C';
-          form.querySelectorAll('input').forEach(i => i.disabled = true);
+          window.location.href = 'thank-you.html';
         } catch (err) {
           btn.disabled = false;
           btn.textContent = 'Join the waitlist!';
